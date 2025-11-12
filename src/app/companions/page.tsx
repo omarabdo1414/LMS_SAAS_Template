@@ -1,8 +1,18 @@
-import React from 'react'
+
 
 function Companions() {
   return (
-    <div>Companions</div>
+    <main>
+      <div>
+        <h2>Companion Library</h2>
+        <div>
+
+        </div>
+      </div>
+      <div>
+        
+      </div>
+    </main>
   )
 }
 
