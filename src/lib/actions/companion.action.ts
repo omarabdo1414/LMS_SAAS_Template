@@ -2,7 +2,6 @@
 
 import { auth } from "@clerk/nextjs/server"
 import { createSupabaseClient } from "../subabase";
-import { cp } from "fs";
 
 export const createCompanion = async (fromData: CreateCompanion) => {
     const { userId: author } = await auth();
@@ -68,18 +67,52 @@ export const addToSessionHistory = async (companionId : string) => {
     return data;
 }
 
-export const getRecentSessions = async (limit=10) => {
+interface Companion {
+  id: string;
+  name: string;
+  topic: string;
+  subject: string;
+  duration: number;
+  created_at?: string;
+  updated_at?: string;
+}
+
+interface SessionHistory {
+  companion_id: string;
+  companions: Companion;
+  created_at: string;
+}
+
+export const getRecentSessions = async (limit = 10): Promise<Companion[]> => {
     const subabase = await createSupabaseClient();
 
     const { data, error } = await subabase
         .from('session_history')
-        .select('companions: companion_id (*)')
+        .select('companion_id, companions:companion_id(*)')
         .order('created_at', { ascending: false })
         .limit(limit);
     
     if (error) throw new Error(error.message);
     
-    return data.map(({ companions }) => companions);
+    if (!data) return [];
+    
+    // Extract and validate companion data
+    return data
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .map((session: any) => {
+            const companion = session.companions;
+            return companion && 
+                   typeof companion === 'object' &&
+                   'id' in companion &&
+                   'name' in companion &&
+                   'topic' in companion &&
+                   'subject' in companion &&
+                   'duration' in companion
+                ? companion as Companion
+                : null;
+        })
+        .filter((companion): companion is Companion => companion !== null);
+
 }
 
 export const getUserSessions = async (userId: string, limit = 10) => {

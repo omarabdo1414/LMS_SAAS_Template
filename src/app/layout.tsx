@@ -3,9 +3,9 @@ import { Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar/navbar";
 
-import {
-  ClerkProvider,
-} from '@clerk/nextjs'
+import { ClerkProvider } from '@clerk/nextjs'
+
+export const dynamic = 'force-dynamic'
 
 const bricolage = Bricolage_Grotesque({
   variable: "--font-bricolage",
