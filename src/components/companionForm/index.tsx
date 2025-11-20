@@ -17,10 +17,6 @@ import { redirect } from "next/navigation";
 // } from "@/components/ui/card"
 import {
     Field,
-    FieldDescription,
-    FieldError,
-    FieldGroup,
-    FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -34,7 +30,6 @@ import { Textarea } from "@/components/ui/textarea"
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -141,6 +136,7 @@ function CompanionForm() {
                                         <SelectValue placeholder="Select the subject" />
                                     </SelectTrigger>
                                     <SelectContent>
+                                        <SelectItem value="all">Select Subject</SelectItem>
                                         {subjects.map((subject) => {
                                             return (
                                                 <SelectItem key={subject} value={subject} className="capitalize">{subject}</SelectItem>

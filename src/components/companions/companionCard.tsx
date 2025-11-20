@@ -18,6 +18,7 @@ function CompanionCard({
     duration,
     color
 }: CompanionCardProps) {
+    const companionURL = `/companions/${id}`;
   return (
     <article className='companion-card' style={{backgroundColor: color}}>
         <div className='flex justify-between items-center'>
@@ -32,10 +33,8 @@ function CompanionCard({
             <Image src="/icons/clock.svg" alt="duration" width={13.5} height={13.5} />
             <p className='text-sm'>{duration} min</p>
         </div>
-        <Link href={`/companions/${id}`}>
-            <button className='btn-primary w-full justify-center'>
-                Launch Lesson
-            </button>
+        <Link href={companionURL} className='btn-primary w-full justify-center'>
+            Launch Lesson
         </Link>
     </article>
   )
